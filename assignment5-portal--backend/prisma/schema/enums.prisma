@@ -1,0 +1,42 @@
+enum Role {
+
+    ADMIN
+    MEMBER
+ 
+}
+ enum UserStatus {
+    ACTIVE
+    BLOCKED
+    DELETED
+}
+
+enum Gender {
+    FEMALE
+    MALE
+    OTHER
+}
+
+
+enum VoteType {
+  UPVOTE
+  DOWNVOTE
+}
+
+enum PaymentStatus {
+  SUCCESS
+  FAILED
+  PENDING
+}
+
+enum IdeaStatus {
+  DRAFT
+  PENDING
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+}
+
+enum IdeaType {
+  FREE
+  PAID
+}

@@ -1,0 +1,50 @@
+services:
+  portalDB:
+    image: postgres:16-alpine
+    container_name: portalDB
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: portaldb
+    volumes:
+      - portal-pg-data:/var/lib/postgresql/data
+    networks:
+      - portal-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d portaldb"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  portal-server:
+    image: ${REGISTRY}/${IMAGE_NAMESPACE}/portal-server:${IMAGE_TAG}
+    container_name: portal-server
+    restart: unless-stopped
+    env_file:
+      - ./assignment5-portal--backend/.env
+    depends_on:
+      portalDB:
+        condition: service_healthy
+    networks:
+      - portal-network
+    ports:
+      - "127.0.0.1:6060:6060"
+
+  portal-client:
+    image: ${REGISTRY}/${IMAGE_NAMESPACE}/portal-client:${IMAGE_TAG}
+    container_name: portal-client
+    restart: unless-stopped
+    depends_on:
+      - portal-server
+    networks:
+      - portal-network
+    ports:
+      - "127.0.0.1:4000:4000"
+
+networks:
+  portal-network:
+    driver: bridge
+
+volumes:
+  portal-pg-data:
