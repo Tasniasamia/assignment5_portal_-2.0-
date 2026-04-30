@@ -41,7 +41,7 @@ jobs:
 
       - name: Install server deps
         working-directory: ./${{ env.BACKEND_DIR }}
-        run: npm ci --ignore-scripts
+        run: npm ci --ignore-scripts --legacy-peer-deps
 
       - name: Generate Prisma client
         working-directory: ./${{ env.BACKEND_DIR }}
