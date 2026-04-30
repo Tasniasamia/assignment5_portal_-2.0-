@@ -16,6 +16,7 @@
     "stripe:webhook": "stripe listen --forward-to localhost:6060/api/v1/payments/webhook",
     "seedAdmin": "tsx --watch  src/scripts/seedAdmin.ts"
   },
+  "npmrc": "legacy-peer-deps=true",
   "keywords": [],
   "author": "",
   "license": "ISC",
