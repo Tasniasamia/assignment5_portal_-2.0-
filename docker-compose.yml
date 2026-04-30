@@ -57,7 +57,7 @@ services:
     networks:
       - portal-network
     ports:
-      - "127.0.0.1:4000:4000"
+      - "127.0.0.1:4000:3000"
 
   # ── Frontend Instance 2 (নতুন) ───────────────────────
   portal-client-2:
@@ -69,7 +69,7 @@ services:
     networks:
       - portal-network
     ports:
-      - "127.0.0.1:4001:4000"   # host:4001 → container:4000
+      - "127.0.0.1:4001:3000"   # host:4001 → container:3000
 
 networks:
   portal-network:
