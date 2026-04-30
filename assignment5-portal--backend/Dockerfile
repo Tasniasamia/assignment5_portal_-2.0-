@@ -17,4 +17,4 @@ COPY --from=builder /app/api ./api
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/prisma.config.ts ./prisma.config.ts
 EXPOSE 6060
-CMD ["node", "api/index.js"]
+CMD ["node", "api/index.mjs"]
