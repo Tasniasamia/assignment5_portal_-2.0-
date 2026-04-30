@@ -17,6 +17,7 @@ services:
       timeout: 5s
       retries: 10
 
+  # ── Backend Instance 1 ──────────────────────────────
   portal-server:
     image: ${REGISTRY}/${IMAGE_NAMESPACE}/portal-server:${IMAGE_TAG}
     container_name: portal-server
@@ -31,6 +32,22 @@ services:
     ports:
       - "127.0.0.1:6060:6060"
 
+  # ── Backend Instance 2 (নতুন) ────────────────────────
+  portal-server-2:
+    image: ${REGISTRY}/${IMAGE_NAMESPACE}/portal-server:${IMAGE_TAG}
+    container_name: portal-server-2
+    restart: unless-stopped
+    env_file:
+      - ./assignment5-portal--backend/.env
+    depends_on:
+      portalDB:
+        condition: service_healthy
+    networks:
+      - portal-network
+    ports:
+      - "127.0.0.1:6061:6060"   # host:6061 → container:6060
+
+  # ── Frontend Instance 1 ─────────────────────────────
   portal-client:
     image: ${REGISTRY}/${IMAGE_NAMESPACE}/portal-client:${IMAGE_TAG}
     container_name: portal-client
@@ -41,6 +58,18 @@ services:
       - portal-network
     ports:
       - "127.0.0.1:4000:4000"
+
+  # ── Frontend Instance 2 (নতুন) ───────────────────────
+  portal-client-2:
+    image: ${REGISTRY}/${IMAGE_NAMESPACE}/portal-client:${IMAGE_TAG}
+    container_name: portal-client-2
+    restart: unless-stopped
+    depends_on:
+      - portal-server-2
+    networks:
+      - portal-network
+    ports:
+      - "127.0.0.1:4001:4000"   # host:4001 → container:4000
 
 networks:
   portal-network:

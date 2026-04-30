@@ -74,7 +74,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-              submodules: recursive
+          submodules: recursive
 
       - name: Normalize image namespace
         id: vars
@@ -166,7 +166,11 @@ jobs:
             echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login docker.io -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
             docker compose -f docker-compose.yml pull
-            docker compose -f docker-compose.yml up -d ph-db
+            docker compose -f docker-compose.yml up -d portalDB
             docker compose -f docker-compose.yml run --rm ${{ env.SERVER_IMAGE }} sh -c "npx prisma migrate deploy"
-            docker compose -f docker-compose.yml up -d ${{ env.SERVER_IMAGE }} ${{ env.CLIENT_IMAGE }}
+            docker compose -f docker-compose.yml up -d \
+              ${{ env.SERVER_IMAGE }} \
+              ${{ env.SERVER_IMAGE }}-2 \
+              ${{ env.CLIENT_IMAGE }} \
+              ${{ env.CLIENT_IMAGE }}-2
             docker image prune -f
