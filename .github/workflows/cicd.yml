@@ -62,7 +62,7 @@ jobs:
       - name: Build client
         working-directory: ./${{ env.FRONTEND_DIR }}
         env:
-          BACKEND_URL: ${{ secrets.BACKEND_URL }}
+          NEXT_PUBLIC_API_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
         run: npm run build
 
   docker:
@@ -109,7 +109,7 @@ jobs:
           context: ./${{ env.FRONTEND_DIR }}
           file: ./${{ env.FRONTEND_DIR }}/Dockerfile
           build-args: |
-            BACKEND_URL=${{ secrets.BACKEND_URL }}
+            NEXT_PUBLIC_API_BASE_URL=${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
           push: true
           tags: |
             docker.io/${{ steps.vars.outputs.namespace }}/${{ env.CLIENT_IMAGE }}:latest
