@@ -23,8 +23,7 @@ services:
     restart: unless-stopped
     env_file:
       - ./assignment5-portal--backend/.env
-    volumes:
-      - ./assignment5-portal--backend/.env:/app/.env
+  
     depends_on:
       portalDB:
         condition: service_healthy
@@ -39,8 +38,7 @@ services:
     restart: unless-stopped
     env_file:
       - ./assignment5-portal--backend/.env
-    volumes:
-      - ./assignment5-portal--backend/.env:/app/.env
+   
     depends_on:
       portalDB:
         condition: service_healthy
