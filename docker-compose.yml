@@ -24,6 +24,8 @@ services:
     restart: unless-stopped
     env_file:
       - ./assignment5-portal--backend/.env
+    volumes:
+      - ./assignment5-portal--backend/.env:/app/.env
     depends_on:
       portalDB:
         condition: service_healthy
@@ -39,13 +41,15 @@ services:
     restart: unless-stopped
     env_file:
       - ./assignment5-portal--backend/.env
+    volumes:
+      - ./assignment5-portal--backend/.env:/app/.env
     depends_on:
       portalDB:
         condition: service_healthy
     networks:
       - portal-network
     ports:
-      - "127.0.0.1:6061:6060"   # host:6061 → container:6060
+      - "127.0.0.1:6061:6060"
 
   # ── Frontend Instance 1 ─────────────────────────────
   portal-client:
@@ -69,7 +73,7 @@ services:
     networks:
       - portal-network
     ports:
-      - "127.0.0.1:4001:3000"   # host:4001 → container:3000
+      - "127.0.0.1:4001:3000"
 
 networks:
   portal-network:
