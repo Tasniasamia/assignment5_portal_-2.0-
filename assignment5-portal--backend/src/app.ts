@@ -75,8 +75,6 @@ app.use(NotfoundHandler);
 
 
 // Cron job: cancel unpaid appointments every 30 minutes
-cron.schedule("*/30 * * * *", async () => {
-  console.log("Cron: canceled unpaid appointments if any");
-});
+
 
 export default app;
