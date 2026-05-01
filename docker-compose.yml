@@ -32,7 +32,6 @@ services:
     ports:
       - "127.0.0.1:6060:6060"
 
-  # ── Backend Instance 2 (নতুন) ────────────────────────
   portal-server-2:
     image: ${REGISTRY}/${IMAGE_NAMESPACE}/portal-server:${IMAGE_TAG}
     container_name: portal-server-2
