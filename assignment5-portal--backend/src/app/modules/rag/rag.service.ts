@@ -1,5 +1,6 @@
 import { Prisma } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
+import { redisService } from "../../lib/redis";
 import { EmbeddingService } from "./embedding.service";
 import { IndexingService } from "./indexing.service";
 import  { LLMService } from "./llm.service";
@@ -46,9 +47,71 @@ async generateAnswer(query:string,
 
     const retrivalDocuments=await  this.retrivalDocument( query, limit,sourceType );
     const context=(retrivalDocuments as any)?.filter((doc:any)=>doc.content)?.map((doc:any)=>doc.content);
-
+    const cachedAnswer:string|null =await redisService.get(`rag_answer:${query}:${sourceType}:${asJson}`);
+     
+    console.log("cachedAnswer:", cachedAnswer);
+    if (cachedAnswer) {
+        return {
+        answer: cachedAnswer,
+        sources: (retrivalDocuments as any).map((doc: any) => ({ // ✅ relevantDocs → retrivalDocuments
+            id: doc.id,
+            chunkKey: doc.chunkey,  
+            sourceType: doc.sourceType,
+            sourceId: doc.sourceId,
+            sourceLabel: doc.sourceLabel,
+            content: doc.content,
+            similarity: doc.similarity,
+        })),
+        contextUsed: context.length > 0,
+    };
+    }
     let answer = await this.llmService.generateAnswer( query,context,asJson);
-    return JSON.parse(answer);
+    let parsedAnswer: any ;
+    console.log("LLM answer:", answer);
+   
+  if (asJson) {
+    try {
+        if (answer.startsWith("```json")) {
+            answer = answer.replace(/```json\n?/, "").replace(/```$/, "").trim();
+        } else if (answer.startsWith("```")) {
+            answer = answer.replace(/```\n?/, "").replace(/```$/, "").trim();
+        }
+
+        // AI response clean + normalize
+        answer = answer
+            .replace(/\n/g, " ")
+            .replace(/\r/g, " ")
+            .replace(/\t/g, " ")
+            .replace(/\s+/g, " ")
+            .trim();
+
+        parsedAnswer = JSON.parse(answer);
+
+        await redisService.set(
+            `rag_answer:${query}:${sourceType}:${asJson}`,
+            parsedAnswer,
+            3600
+        ); // Cache for 1 hour
+
+    } catch (error) {
+        console.error("Failed to parse LLM response as JSON:", error);
+        throw new Error("LLM response is not valid JSON");
+    }
+}
+
+    return {
+        answer: parsedAnswer,
+        sources: (retrivalDocuments as any).map((doc: any) => ({ // ✅ relevantDocs → retrivalDocuments
+            id: doc.id,
+            chunkKey: doc.chunkey,  // ✅ DB তে "chunkey" (lowercase)
+            sourceType: doc.sourceType,
+            sourceId: doc.sourceId,
+            sourceLabel: doc.sourceLabel,
+            content: doc.content,
+            similarity: doc.similarity,
+        })),
+        contextUsed: context.length > 0,
+    };
 }
 
 

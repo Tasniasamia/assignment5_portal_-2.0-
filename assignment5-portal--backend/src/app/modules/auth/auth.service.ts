@@ -44,6 +44,7 @@ const register = async (payload: IRegisterMemberPayload) => {
         data: { name: name, email: email, userId: data?.user?.id},
       });
     });
+    console.log("memberTx", memberTx);
     return { ...data?.user, ...memberTx };
   } catch (error: any) {
     await prisma.user.delete({ where: { id: data?.user?.id } });

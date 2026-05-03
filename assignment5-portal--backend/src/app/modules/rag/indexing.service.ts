@@ -79,8 +79,6 @@ export class IndexingService {
     for (let idea of ideas) {
       
       let comments= idea.comments.map((c) => c.content).join(" | ") || "No Comments";
-
-
       let chunkey = `${idea?.id}-${idea?.authorId}`;
       let sourceType = "idea";
       let sourceId = idea?.id;
@@ -91,10 +89,8 @@ export class IndexingService {
   Category: ${idea?.category?.name || "Uncategorized"}
   Votes: ${idea?.votes?.length || 0}
   Comments: ${comments}`;
-      // metdata → metadata
       let metadata = {
-        // ✅
-        ideaId: idea?.id,
+       ideaId: idea?.id,
         title: idea?.title,
         description: idea?.description,
         authorId: idea?.authorId,

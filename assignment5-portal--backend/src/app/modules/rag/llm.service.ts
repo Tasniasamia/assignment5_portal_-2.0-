@@ -23,7 +23,7 @@ export class LLMService {
 
 
       if (asJson) {
-        fullPrompt += `\n\nReturn ONLY a valid JSON object matching this structure: {"doctors": [{"name": "Doctor Name", "reason": "Why they are suitable", "specialty": "Their specialty"}]}. Do not include any markdown formatting like \`\`\`json.`;
+        fullPrompt += `\n\nReturn ONLY a valid JSON object matching this structure: {"ideas": [{"title": "idea title","description": "idea description","comments": "comments","type": "idea type free or paid","reason": "Why the idea is suitable", "category": "ideas category"}]}. Do not include any markdown formatting like \`\`\`json.`;
       }
 
 

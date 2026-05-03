@@ -21,6 +21,7 @@ const ingestIdeas = catchAsyncHandler(async (req: Request, res: Response) => {
 
 const queryRag = catchAsyncHandler(async (req: Request, res: Response) => {
   const { query, limit, sourceType, asJson } = req?.body;
+  console.log("Received query:", { query, limit, sourceType, asJson });
   if (!query) {
     throw new Error("Query is required");
   }
@@ -36,8 +37,8 @@ const queryRag = catchAsyncHandler(async (req: Request, res: Response) => {
   sendResponse(res, {
     success: true,
     httpStatusCode: status.OK,
-    message: `Idea data generate answer completed. Total: ${result}`,
-    data: { count: result },
+    message: `Idea data generate answer completed.`,
+    data: result,
   });
 });
 

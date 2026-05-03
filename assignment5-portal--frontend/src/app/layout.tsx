@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import QueryProvider from "@/provider/queryProvider";
 import { Toaster } from "sonner";
+import FloatingChatbot from "@/components/modules/chatbot/floatingChatbot";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,10 +29,12 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning={false}
     >
       <body className="min-h-full flex flex-col">
         <QueryProvider>{children}</QueryProvider>
         <Toaster />
+        <FloatingChatbot/>
       </body>
     </html>
   );
