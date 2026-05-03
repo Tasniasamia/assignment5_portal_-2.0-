@@ -8,6 +8,7 @@ import { paymentRoutes } from "../modules/payment/payment.route";
 import { commentRoutes } from "../modules/comment/comment.route";
 import { voteRoutes } from "../modules/vote/vote.route";
 import { dashboardRoutes } from "../modules/dashboard/dashboard.route";
+import { RagRoutes } from "../modules/rag/rag.route";
 
 
 
@@ -50,6 +51,10 @@ const allRoutes=[
     {
         path:'/dashboard',
         handler:dashboardRoutes
+    },
+    {
+        path:'/rag',
+        handler:RagRoutes
     }
 
 ]

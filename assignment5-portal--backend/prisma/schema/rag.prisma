@@ -1,4 +1,4 @@
-model documentEmbedding{
+model documentIdeasEmbedding{
   id        String   @id @default(uuid(7))
   chunkey   String @unique
   sourceType String

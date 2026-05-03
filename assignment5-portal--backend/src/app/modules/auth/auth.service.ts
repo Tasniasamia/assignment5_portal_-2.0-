@@ -30,7 +30,6 @@ const register = async (payload: IRegisterMemberPayload) => {
       name,
       email,
       password,
-      needPasswordChanges: true,
       role: Role.MEMBER,
       status:UserStatus.ACTIVE
     },
@@ -42,7 +41,7 @@ const register = async (payload: IRegisterMemberPayload) => {
   try {
     const memberTx = await prisma.$transaction(async (tx) => {
       return await tx.member.create({
-        data: { name: name, email: email, userId: data?.user?.id,needPasswordChanges:false},
+        data: { name: name, email: email, userId: data?.user?.id},
       });
     });
     return { ...data?.user, ...memberTx };
