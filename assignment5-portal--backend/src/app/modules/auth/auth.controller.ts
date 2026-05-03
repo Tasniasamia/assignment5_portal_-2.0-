@@ -12,6 +12,7 @@ import type { TChangePasswordPayload } from "./auth.interface";
 import ejs from 'ejs';
 import path from "path";
 import { auth } from "../../lib/auth";
+import { redisService } from "../../lib/redis";
 
 
 const register = catchAsyncHandler(
@@ -49,13 +50,41 @@ const loginUser = catchAsyncHandler(async (req: Request, res: Response) => {
 const getProfile = catchAsyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const user = await req.user;
-    const result = await AuthService.getProfile(user as JwtPayload);
-    return await sendResponse(res, {
-      httpStatusCode: status.OK,
-      success: true,
-      message: "Get profile successfully",
-      data: result,
-    });
+    
+    try {
+      const result = await AuthService.getProfile(user as JwtPayload);
+      
+      if (!result) {
+        throw new AppError(status.NOT_FOUND, "User not found");
+      }
+
+      // const redisKey = `user_profile_${user?.id}`;
+      
+      // const cachedProfile = await redisService.get(redisKey);
+      
+      // if (cachedProfile) {
+      //   return sendResponse(res, {
+      //     httpStatusCode: status.OK,
+      //     success: true,
+      //     message: "Get profile successfully",
+      //     data: JSON.parse(cachedProfile),
+      //   });
+      // }
+      
+      // await redisService.set(redisKey, JSON.stringify(result), 60 * 60);
+      
+      return sendResponse(res, {
+        httpStatusCode: status.OK,
+        success: true,
+        message: "Get profile successfully",
+        data: result,
+      });
+    } catch (error: any) {
+      if (error instanceof AppError) {
+        throw error;
+      }
+      throw new AppError(status.INTERNAL_SERVER_ERROR, "Failed to fetch profile");
+    }
   }
 );
 

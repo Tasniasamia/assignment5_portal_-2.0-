@@ -23,7 +23,7 @@
   "dependencies": {
     "@opentelemetry/api": "^1.9.1",
     "@prisma/adapter-pg": "^7.3.0",
-    "@prisma/client": "^7.3.0",
+    "@prisma/client": "^7.8.0",
     "@types/ejs": "^3.1.5",
     "@types/express": "^5.0.6",
     "@types/nodemailer": "^7.0.9",
@@ -44,6 +44,7 @@
     "nodemon": "^3.1.11",
     "pdfkit": "^0.17.2",
     "puppeteer": "^24.37.5",
+    "redis": "^5.12.1",
     "sharp": "^0.34.5",
     "stripe": "^20.3.1",
     "ts-node": "^10.9.2",
@@ -60,7 +61,7 @@
     "@types/node": "^25.2.2",
     "@types/pdfkit": "^0.17.5",
     "eslint": "^9.39.2",
-    "prisma": "^7.3.0",
+    "prisma": "^7.8.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.54.0"
   },

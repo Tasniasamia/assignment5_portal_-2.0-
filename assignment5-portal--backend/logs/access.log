@@ -1,2 +1,4 @@
 {"timestamp":"2026-04-19T08:40:04.554Z","method":"POST","endpoint":"/api/v1/auth/login","statusCode":500,"responseTimeMs":3144.85,"ip":"::1","userAgent":"PostmanRuntime/7.53.0"}
 {"timestamp":"2026-04-19T08:40:48.686Z","method":"GET","endpoint":"/api/v1/idea","statusCode":304,"responseTimeMs":5129.61,"ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36"}
+{"timestamp":"2026-05-03T04:38:27.961Z","method":"POST","endpoint":"/api/v1/auth/register","statusCode":503,"responseTimeMs":6036.18,"ip":"::1","userAgent":"axios/1.13.6"}
+{"timestamp":"2026-05-03T04:48:51.093Z","method":"POST","endpoint":"/api/v1/auth/register","statusCode":201,"responseTimeMs":11451.48,"ip":"::1","userAgent":"axios/1.13.6"}

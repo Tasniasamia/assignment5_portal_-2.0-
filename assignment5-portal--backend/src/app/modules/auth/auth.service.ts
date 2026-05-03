@@ -42,7 +42,7 @@ const register = async (payload: IRegisterMemberPayload) => {
   try {
     const memberTx = await prisma.$transaction(async (tx) => {
       return await tx.member.create({
-        data: { name: name, email: email, userId: data?.user?.id },
+        data: { name: name, email: email, userId: data?.user?.id,needPasswordChanges:false},
       });
     });
     return { ...data?.user, ...memberTx };
@@ -51,6 +51,10 @@ const register = async (payload: IRegisterMemberPayload) => {
     throw error;
   }
 };
+
+
+
+
 
 const loginUser = async (payload: ILoginUserPayload) => {
   const { email, password } = payload;
@@ -89,6 +93,8 @@ const loginUser = async (payload: ILoginUserPayload) => {
 
   return { data, accessToken, refreshToken, token };
 };
+
+
 
 const getProfile = async (user: JwtPayload) => {
   const findUser = await prisma.user.findFirst({
@@ -174,13 +180,6 @@ const updateProfile = async (payload: IUpdateProfilePayload, user: JwtPayload) =
 
   return result;
 };
-
-
-
-
-
-
-
 
 
 const getNewToken = async (refreshToken: string, sessionToken: string) => {
