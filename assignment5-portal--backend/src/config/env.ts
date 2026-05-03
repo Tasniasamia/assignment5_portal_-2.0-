@@ -28,7 +28,11 @@ interface EnvConfig {
   STRIPE_PUBLISHABLE_KEY:string,
   STRIPE_SECRET_KEY:string,
   WEBHOOK_SIGNING_SECRET:string
-  REDIS_URL:string
+  REDIS_URL:string,
+  OPENROUTER_EMBEDING_MODEL:string,
+  OPENROUTER_LLM_MODEL:string,
+  OPENROUTER_API_KEY:string,
+  OPENROUTER_URL:string
 
 
 }
@@ -61,7 +65,11 @@ const loadEnvironmentVariables = (): EnvConfig => {
     "STRIPE_PUBLISHABLE_KEY",
     "STRIPE_SECRET_KEY",
     "WEBHOOK_SIGNING_SECRET",
-    "REDIS_URL"
+    "REDIS_URL",
+    "OPENROUTER_EMBEDING_MODEL",
+    "OPENROUTER_LLM_MODEL",
+    "OPENROUTER_API_KEY",
+    "OPENROUTER_URL"
 
   ].forEach((variable) => {
     if (!process?.env?.[variable]) {
@@ -97,7 +105,11 @@ const loadEnvironmentVariables = (): EnvConfig => {
     STRIPE_PUBLISHABLE_KEY:process.env.STRIPE_PUBLISHABLE_KEY as string,
   STRIPE_SECRET_KEY:process.env.STRIPE_SECRET_KEY as string,
   WEBHOOK_SIGNING_SECRET:process.env.WEBHOOK_SIGNING_SECRET as string,
-  REDIS_URL:process.env.REDIS_URL as string
+  REDIS_URL:process.env.REDIS_URL as string,
+  OPENROUTER_EMBEDING_MODEL:process.env.OPENROUTER_EMBEDING_MODEL as string,
+  OPENROUTER_LLM_MODEL:process.env.OPENROUTER_LLM_MODEL as string,
+  OPENROUTER_API_KEY:process.env.OPENROUTER_API_KEY as string,
+  OPENROUTER_URL:process.env.OPENROUTER_URL as string
 
 
   };
